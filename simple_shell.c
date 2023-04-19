@@ -22,20 +22,20 @@ int eval_fork(pid_t pid, char *cmd, char *cmd_cpy, char *argv[])
 	free(cmd);
 	free(cmd_cpy);
 	free(argv);
+	return (1);
 }
 /**
  *
  *
  *
  **/
-int main(int arc, char *arv[])
+int main(void)
 {
 	char *cmd, *cmd_cpy, *token;
 	char *delim = " \n";
 	size_t n;
 	int argc, i;
 	char **argv;
-	pid_t pid;
 	
 	while (1)
 	{
