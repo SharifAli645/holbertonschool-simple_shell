@@ -6,6 +6,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 extern char **environ;
-char **eval_token(char *tkn, char *argv[], char *cmd, char *cmd_cpy, char *delim);
+char **eval_token(char *tkn, char *argv[], char *cmd, char *cmd_cpy, char *dl);
 int eval_fork(pid_t pid, char *cmd, char *cmd_cpy, char *argv[], char *ex);
 #endif
