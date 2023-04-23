@@ -11,13 +11,15 @@
  **/
 int eval_fork(pid_t pid, char *cmd, char *cmd_cpy, char *argv[], char *ex)
 {
+	char *actual_command = NULL;
+
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)
 	{
-		int val = execve(argv[0], argv, environ);
+		actual_command = get_location(argv[0]);
 
-		if (val == -1)
+		if (execve(actual_command, argv, environ) == -1)
 			perror(ex);
 	} else
 		wait(NULL);
@@ -59,6 +61,17 @@ char **eval_token(char *tkn, char *argv[], char *cmd, char *cmd_cpy, char *dl)
 	return (argv);
 }
 /**
+ * sig_handler - function that print prompt
+ * @sig: sign
+ *
+ * Return: Always void
+ **/
+void sig_handler(int sig)
+{
+	if (sig == SIGINT)
+		write(2, "\n#code: ", 7);
+}
+/**
  * main - main function
  * @arc: arc
  * @arv: arv
@@ -81,13 +94,19 @@ int main(int arc, char *arv[])
 		argv = NULL;
 		n = 0;
 
-	printf("#code-here$ ");
-	if (getline(&cmd, &n, stdin) == -1)
-		return (-1);
-
-	cmd_cpy = strdup(cmd);
-	argv = eval_token(token, argv, cmd, cmd_cpy, delim);
-	eval_fork(fork(), cmd, cmd_cpy, argv, arv[0]);
+		if (isatty(STDIN_FILENO))
+			write(2, "#code: ", 7);
+		signal(SIGINT, sig_handler);
+		if (getline(&cmd, &n, stdin) == -1)
+		{
+			free(cmd);
+			break;
+		}
+		if (!cmd)
+			break;
+		cmd_cpy = _strdup(cmd);
+		argv = eval_token(token, argv, cmd, cmd_cpy, delim);
+		eval_fork(fork(), cmd, cmd_cpy, argv, arv[0]);
 	}
 	return (0);
 }
