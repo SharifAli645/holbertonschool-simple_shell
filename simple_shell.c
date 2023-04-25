@@ -49,7 +49,7 @@ char **eval_token(char *tkn, char *argv[], char *cmd, char *cmd_cpy, char *dl)
 		argc++;
 		tkn = strtok(NULL, dl);
 	}
-	argv = malloc(sizeof(char *) * argc);
+	argv = malloc(sizeof(char *) * (argc + 1));
 	tkn = strtok(cmd_cpy, dl);
 	while (tkn)
 	{
