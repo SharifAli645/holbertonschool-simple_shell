@@ -84,5 +84,5 @@ char *get_location(char *command)
 			return (command);
 		return (NULL);
 	}
-	return (NULL);
+	return (command);
 }
