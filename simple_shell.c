@@ -80,7 +80,7 @@ void sig_handler(int sig)
  **/
 int main(int arc, char *arv[])
 {
-	char *cmd, *cmd_cpy, *token;
+	char *cmd = NULL, *cmd_cpy, *token;
 	char *delim = " \n";
 	size_t n;
 	char **argv;
@@ -104,6 +104,11 @@ int main(int arc, char *arv[])
 		}
 		if (!cmd)
 			break;
+		if (only_spaces(cmd))
+		{
+			free(cmd);
+			continue;
+		}
 		cmd_cpy = _strdup(cmd);
 		argv = eval_token(token, argv, cmd, cmd_cpy, delim);
 		eval_fork(fork(), cmd, cmd_cpy, argv, arv[0]);

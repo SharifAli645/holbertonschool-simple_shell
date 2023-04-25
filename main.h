@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 extern char **environ;
+int only_spaces(char *cmd);
 void sig_handler(int sig);
 char **eval_token(char *tkn, char *argv[], char *cmd, char *cmd_cpy, char *dl);
 char *get_location(char *command);
