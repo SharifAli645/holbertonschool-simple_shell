@@ -111,7 +111,10 @@ int main(int arc, char *arv[])
 		}
 		cmd_cpy = _strdup(cmd);
 		argv = eval_token(token, argv, cmd, cmd_cpy, delim);
-		eval_fork(fork(), cmd, cmd_cpy, argv, arv[0]);
+		if (builtin_function(argv[0]))
+			builtin_function(argv[0])(argv, cmd, cmd_cpy);
+		else
+			eval_fork(fork(), cmd, cmd_cpy, argv, arv[0]);
 	}
 	return (0);
 }
