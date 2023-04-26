@@ -45,14 +45,20 @@ int exit_builtin(char **args, char *input_stdin, char *cpy_stdin)
 }
 /**
  * env_builtin - function that prints the environment
+ * @args: arguments
+ * @input_stdin: input of stdin
+ * @cpy_stdin: copy from stdin
  * Return: Always 1
  **/
-int env_builtin(void)
+int env_builtin(char **args, char *input_stdin, char *cpy_stdin)
 {
 	int i = 0;
 
 	if (environ[i] != NULL)
 		for (i = 0; environ[i] != NULL; i++)
 			printf("%s\n", environ[i]);
+	free(args);
+	free(input_stdin);
+	free(cpy_stdin);
 	return (1);
 }
