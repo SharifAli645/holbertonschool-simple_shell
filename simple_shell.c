@@ -12,6 +12,7 @@
 int eval_fork(pid_t pid, char *cmd, char *cmd_cpy, char *argv[], char *ex)
 {
 	char *actual_command = NULL;
+	struct stat statbuf;
 
 	if (pid == -1)
 		return (-1);
@@ -23,9 +24,18 @@ int eval_fork(pid_t pid, char *cmd, char *cmd_cpy, char *argv[], char *ex)
 			perror(ex);
 	} else
 		wait(NULL);
+	if (argv[1])
+		if (stat(argv[1], &statbuf) == -1)
+		{
+		free(cmd);
+		free(cmd_cpy);
+		free(argv);
+		exit(2);
+		}
 	free(cmd);
 	free(cmd_cpy);
 	free(argv);
+
 	return (1);
 }
 /**
