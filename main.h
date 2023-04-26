@@ -18,6 +18,7 @@ typedef struct built_in
 
 int (*builtin_function(char *cmd))();
 int exit_builtin(char **args, char *input_stdin, char *cpy_stdin);
+int env_builtin();
 
 /* In ... */
 int only_spaces(char *cmd);

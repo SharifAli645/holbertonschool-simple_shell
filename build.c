@@ -10,6 +10,7 @@ int (*builtin_function(char *command))()
 
 	built_in array[] = {
 		{"exit", exit_builtin},
+		{"env", env_builtin},
 		{NULL, NULL}
 	};
 	while (*array[i].function != NULL)
@@ -41,4 +42,17 @@ int exit_builtin(char **args, char *input_stdin, char *cpy_stdin)
 		exit(exit_status);
 	}
 	return (0);
+}
+/**
+ * env_builtin - function that prints the environment
+ * Return: Always 1
+ **/
+int env_builtin(void)
+{
+	int i = 0;
+
+	if (environ[i] != NULL)
+		for (i = 0; environ[i] != NULL; i++)
+			printf("%s\n", environ[i]);
+	return (1);
 }
