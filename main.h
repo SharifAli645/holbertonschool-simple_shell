@@ -8,6 +8,11 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 extern char **environ;
+/**
+ * struct built_in - struct for function pointers
+ * @command: commands
+ * @function: function
+ **/
 typedef struct built_in
 {
 	char *command;
@@ -18,7 +23,7 @@ typedef struct built_in
 
 int (*builtin_function(char *cmd))();
 int exit_builtin(char **args, char *input_stdin, char *cpy_stdin);
-int env_builtin();
+int env_builtin(void);
 
 /* In ... */
 int only_spaces(char *cmd);
