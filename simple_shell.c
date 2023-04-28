@@ -18,15 +18,6 @@ int eval_fork(pid_t pid, char *cmd, char *cmd_cpy, char *argv[], char *ex)
 	if (pid == 0)
 	{
 		actual_command = get_location(argv[0]);
-		if (actual_command == NULL)
-		{
-			fprintf(stderr, "%s: 1: %s: not found\n", ex, argv[0]);
-			free(cmd);
-			free(cmd_cpy);
-			free(argv);
-			exit(127);
-		}
-
 		if (execve(actual_command, argv, environ) == -1)
 			perror(ex);
 	} else
