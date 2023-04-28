@@ -81,7 +81,8 @@ char *get_location(char *command)
 		}
 		free(path_copy);
 		if (stat(command, &buffer) == 0)
-			return (NULL);
+			return (command);
+		return(NULL);
 	}
 	return (NULL);
 }
