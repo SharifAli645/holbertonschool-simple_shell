@@ -82,7 +82,7 @@ char *get_location(char *command)
 		free(path_copy);
 		if (stat(command, &buffer) == 0)
 			return (command);
-		return(NULL);
+		return (NULL);
 	}
-	return (NULL);
+	return (command);
 }
