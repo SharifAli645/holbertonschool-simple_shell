@@ -1,7 +1,6 @@
 #include "main.h"
 /**
  * eval_fork - function that receives the child and father
- * @pid: pid
  * @cmd: string
  * @cmd_cpy: string
  * @argv: argv
@@ -9,24 +8,35 @@
  *
  * Return: e
  **/
-int eval_fork(pid_t pid, char *cmd, char *cmd_cpy, char *argv[], char *ex)
+int eval_fork(char *cmd, char *cmd_cpy, char *argv[], char *ex)
 {
 	char *actual_command = NULL;
+	pid_t pid;
+	int exit_status = 0;
 
+	actual_command = get_location(argv[0]);
+	if (access(actual_command, F_OK) == -1)
+	{
+		fprintf(stderr, "%s: 1: %s: not found\n", ex, argv[0]);
+		exit_status = 127;
+
+	} else
+	{
+	pid = fork();
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)
 	{
-		actual_command = get_location(argv[0]);
 		if (execve(actual_command, argv, environ) == -1)
 			perror(ex);
 	} else
 		wait(NULL);
+	}
 	free(cmd);
 	free(cmd_cpy);
 	free(argv);
 
-	return (1);
+	return (exit_status);
 }
 /**
  * eval_token - function that
@@ -82,16 +92,18 @@ int main(int arc, char *arv[])
 {
 	char *cmd = NULL, *cmd_cpy, *token;
 	char *delim = " \n";
-	size_t n;
 	char **argv;
-	(void) arc;
+	int ex_st = 0;
+	size_t n = 0;
 
+	(void)arc;
 	while (1)
 	{
 		cmd = NULL;
 		cmd_cpy = NULL;
 		token = NULL;
 		argv = NULL;
+		ex_st = 0;
 		n = 0;
 
 		if (isatty(STDIN_FILENO))
@@ -102,8 +114,6 @@ int main(int arc, char *arv[])
 			free(cmd);
 			break;
 		}
-		if (!cmd)
-			break;
 		if (only_spaces(cmd))
 		{
 			free(cmd);
@@ -112,9 +122,9 @@ int main(int arc, char *arv[])
 		cmd_cpy = _strdup(cmd);
 		argv = eval_token(token, argv, cmd, cmd_cpy, delim);
 		if (builtin_function(argv[0]))
-			builtin_function(argv[0])(argv, cmd, cmd_cpy);
+			ex_st = builtin_function(argv[0])(argv, cmd, cmd_cpy);
 		else
-			eval_fork(fork(), cmd, cmd_cpy, argv, arv[0]);
+			ex_st = eval_fork(cmd, cmd_cpy, argv, arv[0]);
 	}
-	return (0);
+	return (ex_st);
 }
