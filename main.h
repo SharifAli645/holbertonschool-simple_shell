@@ -30,7 +30,7 @@ int only_spaces(char *cmd);
 void sig_handler(int sig);
 char **eval_token(char *tkn, char *argv[], char *cmd, char *cmd_cpy, char *dl);
 char *get_location(char *command);
-int eval_fork(pid_t pid, char *cmd, char *cmd_cpy, char *argv[], char *ex);
+int eval_fork(char *cmd, char *cmd_cpy, char *argv[], char *ex);
 char *_getenv(const char *name);
 char *_memcpy(char *dest, char *src, unsigned int n);
 int _atoi(char *s);
