@@ -1,0 +1,42 @@
+.TH SIMPLE_SHELL 1 "May 01, 2023" "Holberton School" "General Commands Manual"
+
+.SH NAME
+.B hsh\fR \- A simple command interpreter (simple_shell)
+
+.SH SYNOPSIS
+.B ./hsh
+.P
+.B [command] [option]
+.P
+.B./hsh\fR [options] [command] | file
+.P
+.B /bin/[command] [option]
+.SH DESCRIPTION
+.LP
+.B hsh\fR Shell is a UNIX term for the interactive user interface with an operating system. The shell is the layer of programming that understands and executes the commands a user enters. In some systems, the shell is called a command interpreter. A shell usually implies an interface
+with a command syntax
+
+.B Overview
+
+The simple shell is a command that reads lines from either a file or the terminal, interprets them, and generally executes other commands. It is the program that is started when a user logs into the system. It incorporates many features to aid interactive use and has the advantage that the interpretative language is common to both interactive and non-interactive use (shell scripts). That is, commands can be typed directly to the running simple shell or can be put into a file, which can be executed directly by the simple shell.
+.SH Return Value
+
+Always 0 for success, other number means failure.
+
+.SH BUILTIN COMMANDS
+.B cd
+- changes the working directory.
+.B env
+- print the environment
+.B exit
+- exit the shell gracefully.
+.B setenv
+- set an environmental variable.
+
+--
+.SH AUTHORS
+Johana Herrera \fI<johana.rosicel@gmail.com>\fR
+.P
+Sharif Abuhadba \fI <pandemiaonirica@gmail.com>\fR
+.P
+Guillermo \fI<@gmail.com>\fR
